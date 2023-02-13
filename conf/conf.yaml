@@ -1,0 +1,19 @@
+server:
+  host: 0.0.0.0
+  port: 8090
+
+mysql:
+  host: 127.0.0.1
+  port: 3306
+  db: paper_plane
+  user: "root"
+  password: "123456"
+
+logging:
+  filename: paper_plane.log
+  level:
+    app: info
+    gorm: warn
+  maxsize: 10 # 单位 大小 megabytes
+  maxage: 30 # 单位 天数
+  compress: false # 是否对旧日志进行gzip压缩
