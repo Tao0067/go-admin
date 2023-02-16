@@ -7,18 +7,12 @@ import (
 	"paper/config"
 )
 
-var DB *gorm.DB
-
-func init() {
-	globalConfig := config.LoadConfig()
-	dbConfig := globalConfig.Mysql
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbConfig.Username, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.DB)
-
-	var err error
-
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-
+func NewDb() (*gorm.DB, error) {
+	dbConfig := config.ServiceConfig.Mysql
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", dbConfig.User, dbConfig.Password, dbConfig.Host, dbConfig.Port, dbConfig.DB)
+	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
+	return db, nil
 }

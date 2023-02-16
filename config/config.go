@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
 	"log"
@@ -9,16 +10,16 @@ import (
 )
 
 var once sync.Once
-var conf *Config
+var conf Config
 
-func LoadConfig() *Config {
+func LoadConfig() Config {
 	once.Do(func() {
 		file, err := os.ReadFile("conf/conf.yaml")
 		if err != nil {
 			log.Fatalf("Fail to read 'conf/conf.yaml': %v", err)
 		}
 
-		conf = &Config{}
+		conf = Config{}
 		err = yaml.Unmarshal(file, conf)
 
 		if err != nil {
@@ -29,14 +30,18 @@ func LoadConfig() *Config {
 	return conf
 }
 
-func ViperConfig() *Config {
+func ViperConfig() {
 	v := viper.New()
 	v.AddConfigPath("conf")
-	v.SetConfigFile("conf")
+	v.SetConfigName("conf")
 	v.SetConfigType("yaml")
-
-	v.Unmarshal(&conf)
-	return conf
+	v.ReadInConfig()
+	//fmt.Print(v.AllSettings())
+	err := v.Unmarshal(&ServiceConfig)
+	if err != nil {
+		panic(fmt.Errorf("Fatal error config file: %s \n", err))
+	}
+	//fmt.Print(ServiceConfig)
 	// 监听文件
 	//v.WatchConfig()
 	//v.OnConfigChange(func(e fsnotify.Event) {
