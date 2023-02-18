@@ -1,16 +1,13 @@
 package e
 
-const (
-	SUCCESS        = 200
-	ERROR          = 500
-	INVALID_PARAMS = 400
-
-	ERROR_EXIST_TAG         = 10001
-	ERROR_NOT_EXIST_TAG     = 10002
-	ERROR_NOT_EXIST_ARTICLE = 10003
-
-	ERROR_AUTH_CHECK_TOKEN_FAIL    = 20001
-	ERROR_AUTH_CHECK_TOKEN_TIMEOUT = 20002
-	ERROR_AUTH_TOKEN               = 20003
-	ERROR_AUTH                     = 20004
+var (
+	Success                   = NewError(0, "成功")
+	ServerError               = NewError(10000000, "服务内部错误")
+	InvalidParams             = NewError(10000001, "入参错误")
+	NotFound                  = NewError(10000002, "找不到")
+	UnauthorizedAuthNotExist  = NewError(10000003, "鉴权失败，找不到对应的 AppKey 和 AppSecret")
+	UnauthorizedTokenError    = NewError(10000004, "鉴权失败，Token 错误")
+	UnauthorizedTokenTimeout  = NewError(10000005, "鉴权失败，Token 超时")
+	UnauthorizedTokenGenerate = NewError(10000006, "鉴权失败，Token 生成失败")
+	TooManyRequests           = NewError(10000007, "请求过多")
 )

@@ -1,0 +1,20 @@
+{{ define "head" }}
+    <link href="/static/css/login.css" rel="stylesheet">
+{{ end }}
+
+{{ define "content" }}
+
+<form class="form-signin center" role="form" action="/admin/login" method="post">
+    <h4 class="form-signin-heading">
+        登陆
+    </h4>
+        <input type="name" name="email" class="form-control" placeholder="Account" required autofocus>
+        <input type="password" name="password" class="form-control" placeholder="Password" required>
+    <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+    <br/>
+<!--    <a class="lead pull-right" href="/admin/signup">注册</a>-->
+</form>
+
+
+{{ end }}

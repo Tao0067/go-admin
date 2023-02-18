@@ -10,7 +10,7 @@ mysql:
   password: "123456"
 
 logging:
-  filename: paper_plane.log
+  filename: log/paper_plane.log
   level:
     app: info
     gorm: warn

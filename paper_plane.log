@@ -1,2 +1,0 @@
-2023/02/16 23:52:21 {"callers":["E:/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"%s: go-programming-tour-book/%seddycjyblog-service","time":1676562741098946200}
-2023/02/16 23:53:03 {"callers":["E:/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"eddycjy: go-programming-tour-book/blog-service","time":1676562783913847200}
