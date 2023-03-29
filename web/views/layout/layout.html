@@ -12,7 +12,11 @@
   {{template "head" .}}
 </head>
 <body>
-{{ template "navbar" .}}
+
+
+{{ if not .isNoLogin }}
+  {{ template "navbar" .}}
+{{ end }}
 
 <div class="container">
 

@@ -34,14 +34,15 @@ func (a Auth) Index(ctx *gin.Context) {
 func (a Auth) GetLogin(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	admin := session.Get(DefaultAuthInfoKye)
-	config.Logger.Info("sessions：%s", admin)
 
 	if admin != nil {
 		ctx.Redirect(http.StatusMovedPermanently, "/admin")
 		return
 	}
 
-	ctx.HTML(200, "login.html", gin.H{})
+	ctx.HTML(http.StatusOK, "login.html", gin.H{
+		"isNoLogin": true,
+	})
 }
 
 func (a Auth) Signup(ctx *gin.Context) {
@@ -81,9 +82,9 @@ func (a Auth) Longin(ctx *gin.Context) {
 	err := ctx.ShouldBind(&login)
 	if err != nil {
 		config.Logger.Error("请求参数格式错误：%s", err.Error())
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 0,
-			"msg":  "请求参数格式错误!",
+		ctx.HTML(http.StatusOK, "login.html", gin.H{
+			"isNoLogin": true,
+			"message":   "请输入正确的账号密码！",
 		})
 		return
 	}
@@ -91,9 +92,9 @@ func (a Auth) Longin(ctx *gin.Context) {
 	adminUser, err := a.AuthService.Login(login.Name, login.Password)
 	if err != nil {
 		config.Logger.Error("用户不存在：%s", err.Error())
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 0,
-			"msg":  "用户不存在!",
+		ctx.HTML(http.StatusOK, "login.html", gin.H{
+			"isNoLogin": true,
+			"message":   "请输入正确的账号密码！",
 		})
 		return
 	}
@@ -103,14 +104,6 @@ func (a Auth) Longin(ctx *gin.Context) {
 	session := sessions.Default(ctx)
 	session.Set(DefaultAuthInfoKye, adminUser.Uuid)
 	err = session.Save()
-	if err != nil {
-		config.Logger.Error("sessions 失败：%s", err.Error())
-		ctx.JSON(http.StatusOK, gin.H{
-			"code": 0,
-			"msg":  "sessions 失败!",
-		})
-		return
-	}
 	ctx.Redirect(http.StatusMovedPermanently, "/admin")
 }
 
