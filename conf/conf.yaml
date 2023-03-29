@@ -5,7 +5,7 @@ server:
 mysql:
   host: 127.0.0.1
   port: 3306
-  db: paper_plane
+  db: admin
   user: "root"
   password: "123456"
 

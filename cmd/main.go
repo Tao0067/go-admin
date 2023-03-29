@@ -34,6 +34,7 @@ func startWebServer() {
 	r.StaticFS("/static", http.Dir("./web/public/"))
 	// 设置模板解析函数
 	render := html.LoadTemplates()
+
 	r.HTMLRender = render
 	server := &http.Server{
 		Addr:    config.ServiceConfig.Server.Host + ":" + config.ServiceConfig.Server.Port,

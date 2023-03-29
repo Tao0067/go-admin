@@ -35,8 +35,20 @@ func (a *Admin) CreateAdmin() error {
 // FindAdminByNameAndPaw 查询用户
 func FindAdminByNameAndPaw(name string, password string) (Admin, error) {
 	a := Admin{}
+	password = models.Encrypt(password)
 
-	tx := config.DB.Where("name = ? amd password = ?", name, password).First(&a)
+	tx := config.DB.Where("name = ? and password = ?", name, password).First(&a)
+	if tx.Error != nil {
+		return a, tx.Error
+	}
+
+	return a, nil
+}
+
+func FindAdminByName(name string) (Admin, error) {
+	a := Admin{}
+
+	tx := config.DB.Where("name = ? ", name).First(&a)
 	if tx.Error != nil {
 		return a, tx.Error
 	}
