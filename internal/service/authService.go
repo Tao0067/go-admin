@@ -7,8 +7,7 @@ import (
 )
 
 type AuthService struct {
-	AdminModel    *model.Admin
-	SessionsModel *model.Sessions
+	AdminModel *model.Admin
 }
 
 func (s AuthService) Signup(name, password string) error {
@@ -34,5 +33,4 @@ func (a AuthService) Login(name, password string) (model.Admin, error) {
 	}
 
 	return adminUser, nil
-	//a.SessionsModel.CreateSessions()
 }

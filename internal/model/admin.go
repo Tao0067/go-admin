@@ -11,7 +11,15 @@ type Admin struct {
 	Uuid       string `json:"uuid"`
 	Name       string `json:"name"`
 	Password   string `json:"password"`
-	CreateTime int64  `json:"create_at"`
+	CreateTime int64  `json:"create_time"`
+}
+
+type ListSearchParams struct {
+	CreateTimeStart int64
+	CreateTimeEnd   int64
+	Name            string
+	Page            int
+	Size            int
 }
 
 func (a *Admin) TableName() string {
@@ -54,4 +62,24 @@ func FindAdminByName(name string) (Admin, error) {
 	}
 
 	return a, nil
+}
+
+func ListSearch(search ListSearchParams) (list *[]Admin, total int64, err error) {
+	list = &[]Admin{}
+	db := config.DB
+	if search.CreateTimeStart != 0 && search.CreateTimeEnd != 0 {
+		db = db.Where("`created_at` BETWEEN ? AND ?", search.CreateTimeStart, search.CreateTimeEnd)
+	}
+	if search.Name != "" {
+		db = db.Where("`name` = ?", search.Name)
+	}
+
+	db = db.Order("create_time desc")
+
+	err = db.Model(&Admin{}).Count(&total).Error
+	if err != nil {
+		return
+	}
+	err = db.Select("id, name, create_time").Limit(search.Size).Offset((search.Page - 1) * search.Size).Find(list).Error
+	return
 }

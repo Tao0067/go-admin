@@ -1,28 +1,3 @@
-2023/03/29 17:51:53 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083513444102000}
-2023/03/29 17:51:55 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083515235383500}
-2023/03/29 17:58:19 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083899578758200}
-2023/03/29 17:58:24 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083904142302400}
-2023/03/29 17:58:58 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083938122688400}
-2023/03/29 17:58:59 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083939267191700}
-2023/03/29 17:59:09 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"error","message":"用户不存在%!(EXTRA string=sanzzhang, string=record not found)","time":1680083949594591200}
-2023/03/29 17:59:09 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"error","message":"用户不存在：用户名 sanzzhang 已经存在！","time":1680083949594591200}
-2023/03/29 17:59:12 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083952056818100}
-2023/03/29 17:59:16 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"adminUser：%s{1 bc9908b1-7135-423c-6ad8-f6851e6530e2 sanzhang 7c4a8d09ca3762af61e59520943dc26494f8941b 1680071016}","time":1680083956644749100}
-2023/03/29 17:59:45 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680083985925361500}
-2023/03/29 18:08:27 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"adminUser：%s{1 bc9908b1-7135-423c-6ad8-f6851e6530e2 sanzhang 7c4a8d09ca3762af61e59520943dc26494f8941b 1680071016}","time":1680084507586388700}
-2023/03/29 18:08:32 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%sbc9908b1-7135-423c-6ad8-f6851e6530e2","time":1680084512243158200}
-2023/03/29 18:24:21 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085461073435800}
-2023/03/29 18:24:38 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085478416215300}
-2023/03/29 18:24:49 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085489489032400}
-2023/03/29 18:24:54 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085494911997000}
-2023/03/29 18:25:19 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085519140307800}
-2023/03/29 18:25:38 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085538844385000}
-2023/03/29 18:26:44 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085604445329100}
-2023/03/29 18:26:58 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085618424073700}
-2023/03/29 18:27:12 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085632291327500}
-2023/03/29 18:27:38 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085658278254000}
-2023/03/29 18:27:39 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085659198056400}
-2023/03/29 18:27:56 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085676099821700}
-2023/03/29 18:28:27 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"sessions：%s\u003cnil\u003e","time":1680085707878133500}
-2023/03/29 18:34:17 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"error","message":"用户不存在%!(EXTRA string=weq, string=record not found)","time":1680086057038674600}
-2023/03/29 18:34:17 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"error","message":"用户不存在：用户名 weq 已经存在！","time":1680086057041283700}
+2023/03/30 10:49:44 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"adminUser：%s{1 bc9908b1-7135-423c-6ad8-f6851e6530e2 sanzhang 7c4a8d09ca3762af61e59520943dc26494f8941b 1680071016}","time":1680144584340631200}
+2023/03/30 15:01:47 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"adminUser：%s{1 bc9908b1-7135-423c-6ad8-f6851e6530e2 sanzhang 7c4a8d09ca3762af61e59520943dc26494f8941b 1680071016}","time":1680159707945681900}
+2023/03/30 15:02:22 {"callers":["C:/Program Files/Go/src/runtime/proc.go: 6506 runtime.doInit"],"level":"info","message":"adminUser：%s{1 bc9908b1-7135-423c-6ad8-f6851e6530e2 sanzhang 7c4a8d09ca3762af61e59520943dc26494f8941b 1680071016}","time":1680159742750927600}
