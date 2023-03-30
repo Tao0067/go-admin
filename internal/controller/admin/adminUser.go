@@ -42,12 +42,11 @@ func (a AdminUser) Index(ctx *gin.Context) {
 		search.Size = 5
 	}
 	list, total, err := a.AdminUser.AdminUserListPage(0, 0, search.Name, search.Page, search.Size)
-	ctx.JSON(http.StatusOK, gin.H{
-		"status": 200,
-		"list":   list,
-		"total":  total,
+
+	ctx.HTML(http.StatusOK, "user.html", gin.H{
+		"users": list,
+		"total": total,
 	})
-	//ctx.HTML(http.StatusOK, "user.html", gin.H{"users": users})
 }
 
 func (a AdminUser) Add(ctx *gin.Context) {

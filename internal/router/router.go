@@ -30,7 +30,7 @@ func Router() *gin.Engine {
 
 		//AdminUser := admin.NewAdminUser()
 		adminRouter.GET("/user", AdminUser.Index)
-		adminRouter.POST("/add", AdminUser.Add)
+		adminRouter.POST("/user/add", AdminUser.Add)
 		//adminRouter.POST("/detail", auth.Signup)
 		//adminRouter.POST("/edit", auth.Signup)
 		//adminRouter.POST("/del", auth.Signup)

@@ -1,69 +1,4 @@
 {{ define "head" }}
-<script>
-    function deleteUser(id) {
-        if (confirm("Are you sure to delete this user?")) {
-            $.ajax({
-                url: "/users/" + id,
-                type: "DELETE",
-                success: function() {
-                    location.reload();
-                }
-            });
-        }
-    }
-
-    function editUser(id) {
-        var name = $("#name-" + id).text();
-        var age = $("#age-" + id).text();
-        var email = $("#email-" + id).text();
-
-        $("#edit-modal #id").val(id);
-        $("#edit-modal #name").val(name);
-        $("#edit-modal #age").val(age);
-        $("#edit-modal #email").val(email);
-
-        $("#edit-modal").modal("show");
-    }
-
-    $(function() {
-        $("#add-form").submit(function(e) {
-            e.preventDefault();
-
-            var name = $("#add-form #name").val();
-            var age = $("#add-form #age").val();
-            var email = $("#add-form #email").val();
-
-            $.ajax({
-                url: "/users",
-                type: "POST",
-                data: JSON.stringify({name: name, age: age, email: email}),
-                contentType: "application/json",
-                success: function(data) {
-                    location.reload();
-                }
-            });
-        });
-
-        $("#edit-form").submit(function(e) {
-            e.preventDefault();
-
-            var id = $("#edit-modal #id").val();
-            var name = $("#edit-modal #name").val();
-            var age = $("#edit-modal #age").val();
-            var email = $("#edit-modal #email").val();
-
-            $.ajax({
-                url: "/users/" + id,
-                type: "PUT",
-                data: JSON.stringify({name: name, age: age, email: email}),
-                contentType: "application/json",
-                success: function(data) {
-                    location.reload();
-                }
-            });
-        });
-    });
-</script>
 {{ end }}
 
 {{ define "content" }}
@@ -75,8 +10,7 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Age</th>
-        <th>Email</th>
+        <th>Create_time</th>
         <th></th>
     </tr>
     </thead>
@@ -85,8 +19,7 @@
     <tr>
         <td>{{$user.Id}}</td>
         <td id="name-{{$user.Id}}">{{$user.Name}}</td>
-        <td id="age-{{$user.Id}}">{{$user.Name}}</td>
-        <td id="email-{{$user.Id}}">{{$user.Name}}</td>
+        <td id="Create_time-{{$user.Id}}">{{$user.CreateTime}}</td>
         <td>
             <button class="btn btn-sm btn-danger" onclick="deleteUser({{$user.Id}})">Delete</button>
             <button class="btn btn-sm btn-primary" onclick="editUser({{$user.Id}})">Edit</button>
@@ -114,12 +47,8 @@
                         <input type="text" class="form-control" id="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" class="form-control" id="age" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <label for="password">Password</label>
+                        <input type="number" class="form-control" id="password" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -148,12 +77,8 @@
                         <input type="text" class="form-control" id="name" required>
                     </div>
                     <div class="form-group">
-                        <label for="age">Age</label>
-                        <input type="number" class="form-control" id="age" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <label for="password">Password</label>
+                        <input type="number" class="form-control" id="password" required>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -164,4 +89,82 @@
         </div>
     </div>
 </div>
+{{ end }}
+
+{{ define "bottom" }}
+
+<script type="text/javascript">
+    function deleteUser(id) {
+        if (confirm("Are you sure to delete this user?")) {
+            $.ajax({
+                url: "/users/" + id,
+                type: "DELETE",
+                success: function() {
+                    location.reload();
+                }
+            });
+        }
+    }
+
+    function editUser(id) {
+        var name = $("#name-" + id).text();
+
+        $("#edit-modal #id").val(id);
+        $("#edit-modal #name").val(name);
+
+        $("#edit-modal").modal("show");
+    }
+
+    $(function() {
+        $("#add-form").submit(function(e) {
+            e.preventDefault();
+
+            var name = $("#add-form #name").val();
+            var password = $("#add-form #password").val();
+
+            $.ajax({
+                url: "/admin/user/add",
+                type: "POST",
+                dataType: "json",
+                data: JSON.stringify({name: name, password: password}),
+                contentType: "application/json",
+                success: function (data) {
+                    console.log(data)
+                    if (data.code === 1) {
+                        location.reload();
+                    } else {
+                        confirm(data.msg)
+                    }
+                },
+                error:function (data) {
+                    confirm("创建失败！")
+                }
+            });
+
+            $("#edit-form").submit(function (e) {
+                e.preventDefault();
+
+                var id = $("#edit-modal #id").val();
+                var name = $("#edit-modal #name").val();
+                var password = $("#edit-modal #password").val();
+
+                $.ajax({
+                    url: "/admin/users/edit",
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({id: id, name: name, password: password}),
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log(data)
+                        if (data.code === 1) {
+                            location.reload();
+                        } else {
+                            confirm(data.msg)
+                        }
+                    }
+                });
+            });
+        });
+    });
+</script>
 {{ end }}

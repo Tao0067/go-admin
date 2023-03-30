@@ -11,9 +11,9 @@ type AuthService struct {
 }
 
 func (s AuthService) Signup(name, password string) error {
-	admin, err := model.FindAdminByName(name)
+	admin, _ := model.FindAdminByName(name)
 
-	if admin.Id > 0 || err != nil {
+	if admin.Id > 0 {
 		return errors.New("用户名 " + name + " 已经存在！")
 	}
 
