@@ -64,7 +64,7 @@ func FindAdminByName(name string) (Admin, error) {
 	return a, nil
 }
 
-func ListSearch(search ListSearchParams) (list *[]Admin, total int64, err error) {
+func AdminUserListSearch(search ListSearchParams) (list *[]Admin, total int64, err error) {
 	list = &[]Admin{}
 	db := config.DB
 	if search.CreateTimeStart != 0 && search.CreateTimeEnd != 0 {
@@ -82,4 +82,17 @@ func ListSearch(search ListSearchParams) (list *[]Admin, total int64, err error)
 	}
 	err = db.Select("id, name, create_time").Limit(search.Size).Offset((search.Page - 1) * search.Size).Find(list).Error
 	return
+}
+
+func (a *Admin) EditAdmin() error {
+	if a.Password != "" {
+		a.Password = models.Encrypt(a.Password)
+	}
+	err := config.DB.Updates(a).Error
+	return err
+}
+
+func (a *Admin) DelAdmin() error {
+	err := config.DB.Delete(a).Error
+	return err
 }

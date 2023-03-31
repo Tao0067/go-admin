@@ -15,6 +15,26 @@ func (a AdminUserService) AdminUserListPage(createTimeStart, createTimeEnd int64
 	search.Name = name
 	search.CreateTimeStart = createTimeStart
 	search.CreateTimeEnd = createTimeEnd
-	list, total, err = model.ListSearch(search)
+	list, total, err = model.AdminUserListSearch(search)
 	return list, total, err
+}
+
+func (a AdminUserService) EditAdminUser(id int, name, password string) error {
+	adminUser := model.Admin{
+		Id:   id,
+		Name: name,
+	}
+
+	if password != "" {
+		adminUser.Password = password
+	}
+
+	return adminUser.EditAdmin()
+}
+
+func (a AdminUserService) DelAdminUser(id int) error {
+	adminUser := model.Admin{
+		Id: id,
+	}
+	return adminUser.DelAdmin()
 }

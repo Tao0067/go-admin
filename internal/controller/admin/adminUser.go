@@ -7,7 +7,6 @@ import (
 	"paper/internal/model"
 	"paper/internal/params"
 	"paper/internal/service"
-	"strconv"
 )
 
 type AdminUser struct {
@@ -80,32 +79,47 @@ func (a AdminUser) Add(ctx *gin.Context) {
 
 }
 
-func (a AdminUser) del(ctx *gin.Context) {
-	id := ctx.Param("id")
-	for i, user := range users {
-		if strconv.Itoa(user.Id) == id {
-			users = append(users[:i], users[i+1:]...)
-			ctx.Status(http.StatusNoContent)
-			return
-		}
+func (a AdminUser) Del(ctx *gin.Context) {
+	var del params.DelAdminUser
+	err := ctx.BindJSON(del)
+	if err != nil {
+		config.Logger.Error("请求参数格式错误：%s", err.Error())
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "请求参数格式错误!",
+		})
+		return
 	}
-	ctx.Status(http.StatusNotFound)
+	err = a.AdminUser.DelAdminUser(del.Id)
+	if err != nil {
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "请求参数格式错误!",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{})
 }
 
-//func (a AdminUser) edit(ctx *gin.Context)  {
-//	id := ctx.Param("id")
-//	var user User
-//	if err := ctx.ShouldBindJSON(&user); err != nil {
-//		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-//		return
-//	}
-//	for i, u := range users {
-//		if strconv.Itoa(u.Id) == id {
-//			user.Id = u.Id
-//			users[i] = user
-//			ctx.JSON(http.StatusOK, user)
-//			return
-//		}
-//	}
-//	ctx.Status(http.StatusNotFound)
-//}
+func (a AdminUser) Edit(ctx *gin.Context) {
+	var edit params.EditAdminUser
+	err := ctx.BindJSON(&edit)
+	if err != nil {
+		config.Logger.Error("请求参数格式错误：%s", err.Error())
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "请求参数格式错误!",
+		})
+		return
+	}
+	err = a.AdminUser.EditAdminUser(edit.Id, edit.Name, edit.Password)
+	if err != nil {
+		config.Logger.Error("请求参数格式错误：%s", err.Error())
+		ctx.JSON(http.StatusOK, gin.H{
+			"code": 0,
+			"msg":  "请求参数格式错误!",
+		})
+		return
+	}
+	ctx.JSON(http.StatusOK, gin.H{})
+}

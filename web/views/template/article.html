@@ -1,0 +1,258 @@
+好的，以下是一个简单的文章后台管理页面的示例代码，包含了Bootstrap、jQuery和ajax：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章管理</title>
+    <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center mb-5">文章管理</h1>
+    <div class="row mb-3">
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="title" placeholder="标题">
+        </div>
+        <div class="col-sm-3">
+            <input type="text" class="form-control" id="author" placeholder="作者">
+        </div>
+        <div class="col-sm-3">
+            <button class="btn btn-primary" id="search-btn">查询</button>
+            <button class="btn btn-secondary" id="reset-btn">重置</button>
+        </div>
+        <div class="col-sm-3 text-right">
+            <button class="btn btn-success" data-toggle="modal" data-target="#add-modal">新增</button>
+        </div>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>标题</th>
+            <th>作者</th>
+            <th>发布时间</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody id="list">
+        </tbody>
+    </table>
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center" id="pagination">
+        </ul>
+    </nav>
+</div>
+
+<!-- 新增文章模态框 -->
+<div class="modal fade" id="add-modal" tabindex="-1" role="dialog" aria-labelledby="add-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="add-modal-label">新增文章</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="add-title">标题</label>
+                        <input type="text" class="form-control" id="add-title" placeholder="请输入文章标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="add-author">作者</label>
+                        <input type="text" class="form-control" id="add-author" placeholder="请输入文章作者">
+                    </div>
+                    <div class="form-group">
+                        <label for="add-content">内容</label>
+                        <textarea class="form-control" id="add-content" rows="5" placeholder="请输入文章内容"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="add-btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑文章模态框 -->
+<div class="modal fade" id="edit-modal" tabindex="-1" role="dialog" aria-labelledby="edit-modal-label" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="edit-modal-label">编辑文章</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" id="edit-id">
+                    <div class="form-group">
+                        <label for="edit-title">标题</label>
+                        <input type="text" class="form-control" id="edit-title" placeholder="请输入文章标题">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-author">作者</label>
+                        <input type="text" class="form-control" id="edit-author" placeholder="请输入文章作者">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-content">内容</label>
+                        <textarea class="form-control" id="edit-content" rows="5" placeholder="请输入文章内容"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="edit-btn">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    $(function() {
+        // 查询按钮点击事件
+        $('#search-btn').on('click', function() {
+            getList(1);
+        });
+
+        // 重置按钮点击事件
+        $('#reset-btn').on('click', function() {
+            $('#title').val('');
+            $('#author').val('');
+            getList(1);
+        });
+
+        // 新增按钮点击事件
+        $('#add-btn').on('click', function() {
+            var title = $('#add-title').val();
+            var author = $('#add-author').val();
+            var content = $('#add-content').val();
+            $.ajax({
+                url: 'add.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {title: title, author: author, content: content},
+                success: function(result) {
+                    if (result.code == 0) {
+                        $('#add-modal').modal('hide');
+                        getList(1);
+                    } else {
+                        alert(result.msg);
+                    }
+                },
+                error: function() {
+                    alert('网络错误，请稍后重试');
+                }
+            });
+        });
+
+        // 编辑按钮点击事件
+        $('#edit-btn').on('click', function() {
+            var id = $('#edit-id').val();
+            var title = $('#edit-title').val();
+            var author = $('#edit-author').val();
+            var content = $('#edit-content').val();
+            $.ajax({
+                url: 'edit.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {id: id, title: title, author: author, content: content},
+                success: function(result) {
+                    if (result.code == 0) {
+                        $('#edit-modal').modal('hide');
+                        getList(1);
+                    } else {
+                        alert(result.msg);
+                    }
+                },
+                error: function() {
+                    alert('网络错误，请稍后重试');
+                }
+            });
+        });
+
+        // 删除按钮点击事件
+        $('#list').on('click', '.delete-btn', function() {
+            var id = $(this).data('id');
+            if (confirm('确认删除该文章吗？')) {
+                $.ajax({
+                    url: 'delete.php',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {id: id},
+                    success: function(result) {
+                        if (result.code == 0) {
+                            getList(1);
+                        } else {
+                            alert(result.msg);
+                        }
+                    },
+                    error: function() {
+                        alert('网络错误，请稍后重试');
+                    }
+                });
+            }
+        });
+
+        // 获取文章列表
+        function getList(page) {
+            var title = $('#title').val();
+            var author = $('#author').val();
+            $.ajax({
+                url: 'list.php',
+                type: 'POST',
+                dataType: 'json',
+                data: {title: title, author: author, page: page},
+                success: function(result) {
+                    if (result.code == 0) {
+                        var list = result.data.list;
+                        var total = result.data.total;
+                        var html = '';
+                        for (var i = 0; i < list.length; i++) {
+                            html += '<tr>';
+                            html += '<td>' + list[i].id + '</td>';
+                            html += '<td>' + list[i].title + '</td>';
+                            html += '<td>' + list[i].author + '</td>';
+                            html += '<td>' + list[i].create_time + '</td>';
+                            html += '<td>';
+                            html += '<button class="btn btn-sm btn-primary edit-btn" data-toggle="modal" data-target="#edit-modal" data-id="' + list[i].id + '">编辑</button>';
+                            html += '<button class="btn btn-sm btn-danger delete-btn ml-2" data-id="' + list[i].id + '">删除</button>';
+                            html += '</td>';
+                            html += '</tr>';
+                        }
+                        $('#list').html(html);
+                        var pagination = '';
+                        if (total > 0) {
+                            var pageSize = 10;
+                            var pageCount = Math.ceil(total / pageSize);
+                            pagination += '<li class="page-item ' + (page == 1 ? 'disabled' : '') + '"><a class="page-link" href="javascript:getList(' + (page - 1) + ')">上一页</a></li>';
+                            for (var i = 1; i <= pageCount; i++) {
+                                pagination += '<li class="page-item ' + (i == page ? 'active' : '') + '"><a class="page-link" href="javascript:getList(' + i + ')">' + i + '</a></li>';
+                            }
+                            pagination += '<li class="page-item ' + (page == pageCount ? 'disabled' : '') + '"><a class="page-link" href="javascript:getList(' + (page + 1) + ')">下一页</a></li>';
+                        }
+                        $('#pagination').html(pagination);
+                    } else {
+                        alert(result.msg);
+                    }
+                },
+                error: function() {
+                    alert('网络错误，请稍后重试');
+                }
+            });
+        }
+
+        // 默认获取第一页文章列表
+        getList(1);
+    });
+</script>
+</body>
+</html>
